@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Change to your own main package name. -->
+	<groupId>org.mineacademy</groupId>
+	
+	<!-- Change to your program's name, must be lower cased and match your end package name. No spaces. -->
+	<artifactId>maven-program</artifactId>
+	
+	<!-- Change to your program's name. Can contain capital letters, but do NOT use spaces. -->
+	<name>MavenProgram</name>
+	
+	<!-- Change to the appropriate programs's version, i.e. starting at 1.0.0. -->
+	<version>1.0.0</version>
+	
+	<!-- DO NOT EDIT. -->
+	<packaging>jar</packaging>
+	
+	<properties>
+		
+		<!-- Change to your name or the main program author. -->
+		<author>kangarko</author>
+		
+		<!-- Change to the full path where your main plugin class is located. -->
+		<main.class>org.mineacademy.mavenprogram.MavenProgram</main.class>
+		
+		<!-- Change the Java version this program is compiled for.
+
+			 IMPORTANT: For Java 8, version is "1.8", for Java 11+ it is only "11" or "17".
+
+			 If you use 1.8 then your program will work on newer versions,
+			 but if you use "11" or "17" then it will NOT load on servers
+			 with previous Java versions. We recommend you stick with 1.8.
+			 -->
+		<java.version>1.8</java.version>
+		
+		<!-- DO NOT EDIT. -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<repositories>
+		<!-- DO NOT EDIT, used to pull Foundation from the JitPack site. -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	
+	<!-- Do NOT edit. -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-snapshots</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<!-- DO NOT EDIT unless instructed to do so or you know what you're doing. -->
+	<build>
+		<finalName>${project.name}-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				
+				<!-- Change version to the latest one from
+					 https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+				<version>3.2.2</version>
+				<configuration>
+					<archive>
+			            <manifest>
+				            <mainClass>${main.class}</mainClass>
+			            </manifest>
+			        </archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				
+				<!-- Change version to the latest one from
+					 https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<version>3.9.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				
+				<!-- We use latest snapshot here for modern Java compatibility. Change version to the latest one from
+					 https://repository.apache.org/content/repositories/snapshots/org/apache/maven/plugins/maven-shade-plugin/ -->
+				<version>3.3.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+				</configuration>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>
